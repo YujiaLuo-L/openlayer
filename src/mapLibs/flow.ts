@@ -43,25 +43,21 @@ export function addFlow(map: any, lineFeature: any, lineVector: any) {
 
     function moveFeature(event: any) {
         // const speed = Number(speedInput.value);
-        const speed = 200;
+        const speed = 200; //流动的速度
         const time = event.frameState.time;
         const elapsedTime = time - lastTime;
         distance = (distance + (speed * elapsedTime) / 1e6) % 2;
         lastTime = time;
-
         const currentCoordinate = lineFeature
             .getGeometry()
             .getCoordinateAt(distance > 1 ? distance - 1 : distance);
         //放箭头时，需要实时改变箭头的方向
         angle = getAngle(position.getCoordinates(), currentCoordinate);
-
         icon.setRotation(-angle);
-
         position.setCoordinates(currentCoordinate);
-
-        const vectorContext = getVectorContext(event);
+        const vectorContext = getVectorContext(event); // 获取用于绘制到事件画布的矢量上下文
         vectorContext.setStyle(iconStyle);
-        vectorContext.drawGeometry(position);
+        // vectorContext.drawGeometry(position);
         // tell OpenLayers to continue the postrender animation
         map.render();
     }

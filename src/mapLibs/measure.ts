@@ -51,7 +51,6 @@ export function measure(map: Record<string, any>) {
         helpTooltipElement.innerHTML = lengthStr;
         return lengthStr;
     }
-
     // 计算面积
     function formatArea(polygon: any) {
         const sourceProj = map.getView().getProjection(); // 获取投影坐标系
@@ -64,8 +63,7 @@ export function measure(map: Record<string, any>) {
 
     // 激活测量
     function addInteraction(type: string) {
-        map.addOverlay(helpTooltip);
-
+        map.addOverlay(helpTooltip); //用来展示最新测量结果
         const draw = new Draw({
             source: source,
             type: type,
@@ -100,9 +98,9 @@ export function measure(map: Record<string, any>) {
                 const geom = evt.target;
                 let output;
                 if (geom instanceof Polygon) {
-                    measureResult = formatArea(geom);
+                    measureResult = formatArea(geom); //测量面积
                 } else if (geom instanceof LineString) {
-                    measureResult = formatLength(geom);
+                    measureResult = formatLength(geom); //测量长度
                 }
             });
         });

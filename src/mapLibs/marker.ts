@@ -27,9 +27,11 @@ export function marker(map: Record<string, any>, coords: any) {
             distance: 40,
             source: source,
         }),
-        style: iconStyle,
+        style: iconStyle, //统一设置feature的图标和样式。
+        //在项目中不同要素代表的不同类型的点时可以通过feature.setStyle()方法来设置
     });
     map.addLayer(vectorLayer);
+    //单击要素展示要素信息
     function clickToShowInfo() {
         const helpToolTipElement = document.createElement('div');
         const helpTooltip = new Overlay({
@@ -38,14 +40,14 @@ export function marker(map: Record<string, any>, coords: any) {
             positioning: 'center-left',
         });
         map.addOverlay(helpTooltip);
-        // 单击拾取 singleclick
-        // 移动拾取 pointermove
+        // 单击拾取 singleclick，移动拾取 pointermove
         map.on('singleclick', (evt: any) => {
             const feature = source.getClosestFeatureToCoordinate(
                 evt.coordinate,
             );
             helpTooltip.setPosition(evt.coordinate);
-            helpToolTipElement.innerHTML = `<div style="background-color:#E6E6FA"><div>经度：${evt.coordinate[0]}</div><div>纬度：${evt.coordinate[0]}</div></div>`;
+            helpToolTipElement.innerHTML = `<div style="background-color:#E6E6FA"><div>经度：
+            ${evt.coordinate[0]}</div><div>纬度：${evt.coordinate[0]}</div></div>`;
         });
     }
     return clickToShowInfo;
